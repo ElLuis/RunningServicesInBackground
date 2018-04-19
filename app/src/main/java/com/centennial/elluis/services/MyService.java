@@ -3,6 +3,7 @@ package com.centennial.elluis.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,9 +15,21 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MyService extends Service {
+    /*int counter = 0;
+    static final int UPDATE_INTERVAL = 1000;
+    private Timer timer = new Timer();*/
+
+    //Binding Activity properties
     int counter = 0;
+    URL[] urls;
     static final int UPDATE_INTERVAL = 1000;
     private Timer timer = new Timer();
+    private final IBinder binder = new MyBinder();
+    public class MyBinder extends Binder {
+        MyService getService() {
+            return MyService.this;
+        }
+    }
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -111,11 +124,19 @@ public class MyService extends Service {
         }
     }*/
 
+        //Binding Activity Properties
+        // We want this service to continue running until it is explicitly
+// stopped, so return sticky.
+        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
+        new DoBackgroundTask().execute(urls);
+        return START_STICKY;
+    }
+    //Uncomment for repeated tasks (delete uncommented code)
         //Running repeated tasks using the Timer class
         // We want this service to continue running until it is explicitly
 // stopped, so return sticky.
 //Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
-        doSomethingRepeatedly();
+       /* doSomethingRepeatedly();
         try {
             new DoBackgroundTask().execute(
                     new URL("http://www.amazon.com/somefiles.pdf"),
@@ -127,7 +148,7 @@ public class MyService extends Service {
             e.printStackTrace();
         }
         return START_STICKY;
-    }
+    }*/
     private void doSomethingRepeatedly() {
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
