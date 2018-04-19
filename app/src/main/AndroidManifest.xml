@@ -23,5 +23,6 @@
                 <action android:name="net.learn2develop.MyService" />
             </intent-filter>
         </service>-->
+        <service android:name=".MyIntentService" />
     </application>
 </manifest>

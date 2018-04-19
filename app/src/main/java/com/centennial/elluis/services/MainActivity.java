@@ -13,11 +13,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
         public void startService(View view) {
-            startService(new Intent(getBaseContext(), MyService.class));
+            //startService(new Intent(getBaseContext(), MyService.class));
             //From another app
             /*startService(new Intent("net.learn2develop.MyService"));*/
+
+            startService(new Intent(getBaseContext(), MyIntentService.class)); //terminates itself
         }
         public void stopService(View view) {
-            stopService(new Intent(getBaseContext(), MyService.class));
+            //stopService(new Intent(getBaseContext(), MyService.class));
+
+            stopService(new Intent(MainActivity.this, MyIntentService.class));
         }
     }
